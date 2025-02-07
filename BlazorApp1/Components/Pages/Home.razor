@@ -1,0 +1,23 @@
+﻿@page "/"
+@rendermode InteractiveServer
+@using System.Text
+@using System.Text.Json
+
+<PageTitle>Home</PageTitle>
+
+<h1>SJIS 化</h1>
+
+<input type="text" @bind="InputText" />
+<button @onclick="Convert">変換</button>
+
+<p>@OutputText</p>
+
+@code {
+    private string InputText { get; set; } = "";
+    private string OutputText { get; set; } = "";
+    private void Convert()
+    {
+        var sjis = Encoding.GetEncoding("Shift_JIS");
+        OutputText = string.Join(" ", sjis.GetBytes(InputText).Select(x => $"{x:X2}"));
+    }
+}
